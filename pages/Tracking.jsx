@@ -2,6 +2,7 @@ import { Header } from "../components/Header";
 import'./Tracking.css'
 export function Tracking(){
   return(<>
+  <link rel="icon" type="image/svg+xml" href="/tracking-favicon.png" />
   <title>Tracking</title>
   <Header/>
      <div className="tracking-page">

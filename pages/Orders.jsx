@@ -1,8 +1,10 @@
  import { Header } from "../components/Header";
+ import { NavLink } from "react-router-dom";
  import'./Orders.css'
  export function Orders(){
   return(
     <>
+    <link rel="icon" type="image/svg+xml" href="/orders-favicon.png" />
     <title>Orders</title>
     <Header/>
 
@@ -52,11 +54,11 @@
             </div>
 
             <div className="product-actions">
-              <a href="tracking.html">
+              <NavLink to="/tracking">
                 <button className="track-package-button button-secondary">
                   Track package
                 </button>
-              </a>
+              </NavLink>
             </div>
 
             <div className="product-image-container">
@@ -80,11 +82,11 @@
             </div>
 
             <div className="product-actions">
-              <a href="tracking.html">
+              <NavLink to="/tracking">
                 <button className="track-package-button button-secondary">
                   Track package
                 </button>
-              </a>
+              </NavLink>
             </div>
           </div>
         </div>
@@ -131,11 +133,11 @@
             </div>
 
             <div className="product-actions">
-              <a href="tracking.html">
+              <NavLink to="/tracking">
                 <button className="track-package-button button-secondary">
                   Track package
                 </button>
-              </a>
+              </NavLink>
             </div>
           </div>
         </div>
