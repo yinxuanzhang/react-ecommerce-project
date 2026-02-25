@@ -1,8 +1,14 @@
-import './CheckoutPage.css'
+import './CheckoutPage.css';
 import { CheckoutHeader } from './CheckoutHeader';
-
+import { useState,useEffect } from 'react';
+import axios from 'axios';
 export function CheckoutPage(){
-
+  const [carts,setCarts]=useState([]);
+  useEffect(()=>{
+    axios.get('/api/cart-items').then((response)=>{
+      setCarts(response);
+    })
+  },);
   return (
     <>
     <link rel="icon" type="image/svg+xml" href="/cart-favicon.png" />
@@ -14,7 +20,9 @@ export function CheckoutPage(){
 
       <div className="checkout-grid">
         <div className="order-summary">
-          <div className="cart-item-container">
+          {carts.map((cartItem)=>{
+            return(
+            <div className="cart-item-container">
             <div className="delivery-date">
               Delivery date: Tuesday, June 21
             </div>
@@ -88,7 +96,9 @@ export function CheckoutPage(){
                 </div>
               </div>
             </div>
-          </div>
+          </div>);
+          })}
+  
 
           <div className="cart-item-container">
             <div className="delivery-date">
