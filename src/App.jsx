@@ -9,13 +9,25 @@ import{useEffect,useState}from 'react';
 import './App.css'
 
 function App() {
-  
+  const[products,setProducts]=useState([]);
+    useEffect(()=>{
+      axios.get('/api/products').then((response)=>{
+        setProducts(response.data);
+      })
+    }
+  ,[]);
+  const [carts,setCarts]=useState([]);
+  useEffect(()=>{
+    axios.get('/api/cart-items').then((response)=>{
+      setCarts(response.data);
+    })
+  },[]);
 
   return (
    
     <Routes>
-      <Route index element={<Homepage />}/>
-      <Route path='checkout' element={<CheckoutPage/>}/>
+      <Route index element={<Homepage products={products}/>}/>
+      <Route path='checkout' element={<CheckoutPage carts={carts} products={products}/>}/>
       <Route path='orders' element={<Orders />}/>
       <Route path='tracking' element={<Tracking />}/>
       <Route path='*' element={<NotFoundPage/>}/>

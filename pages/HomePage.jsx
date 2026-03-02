@@ -1,16 +1,8 @@
 import { Header } from '../components/Header';
-import axios from 'axios';
-import{useEffect,useState}from 'react';
 import './HomePage.css';
 
-export function Homepage(){
-  const[products,setProducts]=useState([]);
-    useEffect(()=>{
-      axios.get('/api/products').then((response)=>{
-        setProducts(response.data);
-      })
-    }
-  ,[]);
+export function Homepage({products}){
+  
   
 return(
     <>
@@ -22,7 +14,7 @@ return(
     <div className="products-grid">
       {products.map((productItem)=>{
         return(
-                <div  key={productItem.id} className="product-container">
+          <div  key={productItem.id} className="product-container">
           <div  className="product-image-container">
             <img className="product-image"
               src= {productItem.image}/>
