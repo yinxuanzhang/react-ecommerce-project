@@ -1,4 +1,4 @@
-import { Header } from "../components/Header";
+import { Header } from "../../components/Header";
 import { NavLink } from "react-router-dom";
 import { useState,useEffect,Fragment } from "react";
 import axios from "axios";

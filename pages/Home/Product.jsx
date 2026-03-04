@@ -1,20 +1,10 @@
-import { Header } from '../components/Header';
-import './HomePage.css';
-
-export function Homepage({products}){
+import { useState } from "react";
+import axios from "axios";
+export function Product({productItem,updateCart}){
+  const [quantity,setQuantity]=useState(1);
   
-  
-return(
-    <>
-    <link rel="icon" type="image/svg+xml" href="/home-favicon.png" />
-    <title>Ecommerce Project</title>
-    <Header />
-
-    <div className="home-page">
-    <div className="products-grid">
-      {products.map((productItem)=>{
-        return(
-          <div  key={productItem.id} className="product-container">
+  return(
+          <div  key={productItem.id} className="product-container" >
           <div  className="product-image-container">
             <img className="product-image"
               src= {productItem.image}/>
@@ -36,8 +26,12 @@ return(
            ${(productItem.priceCents/100).toFixed(2)}
           </div>
 
-          <div className="product-quantity-container">
-            <select>
+          <div className="product-quantity-container" >
+            <select value={quantity} onChange={
+            (event)=>{
+              setQuantity(Number(event.target.value));
+            }
+          }>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -58,18 +52,14 @@ return(
             Added
           </div>
 
-          <button className="add-to-cart-button button-primary">
+          <button className="add-to-cart-button button-primary" onClick={async()=>{
+            await axios.post('/api/cart-items',
+              {productId: productItem.id,
+              quantity:quantity});
+            updateCart();
+          }}>
             Add to Cart
           </button>
         </div>
-        );
-  
-          
-        })}
-      </div>
-    </div>
-    
-  </>
   );
 }
-
