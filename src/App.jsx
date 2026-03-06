@@ -28,8 +28,8 @@ function App() {
   return (
    
     <Routes>
-      <Route index element={<Homepage products={products} updateCart={updateCart}/>}/>
-      <Route path='checkout' element={<CheckoutPage carts={carts} products={products}/>}/>
+      <Route index element={<Homepage products={products} updateCart={updateCart} carts={carts}/>}/>
+      <Route path='checkout' element={<CheckoutPage carts={carts} products={products} updateCart={updateCart}/>}/>
       <Route path='orders' element={<Orders />}/>
       <Route path='tracking' element={<Tracking />}/>
       <Route path='*' element={<NotFoundPage/>}/>

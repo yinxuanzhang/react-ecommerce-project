@@ -1,14 +1,14 @@
 import { Header } from '../../components/Header';
 import './HomePage.css';
 import { ProductsGrid } from './ProductsGrid';
-export function Homepage({products,updateCart}){
+export function Homepage({products,updateCart,carts}){
   
   
 return(
     <>
     <link rel="icon" type="image/svg+xml" href="/home-favicon.png" />
     <title>Ecommerce Project</title>
-    <Header />
+    <Header carts={carts}/>
 
     <div className="home-page">
     <ProductsGrid products={products} updateCart={updateCart}/>

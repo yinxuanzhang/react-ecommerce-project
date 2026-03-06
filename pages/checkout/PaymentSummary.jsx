@@ -1,5 +1,14 @@
 import { moneyCount } from "../../utils/money";
-export function PaymentSummary({paymentSummary,cartCounts}){
+import { Navigate, useNavigate } from 'react-router-dom';
+
+import axios from "axios";
+export function PaymentSummary({paymentSummary,cartCounts,updateCart}){
+  const navigate=useNavigate();
+  const createOrder=async()=>{
+    await axios.post('/api/orders');
+    updateCart();
+    navigate('/orders');
+  }
   return( <div className="payment-summary">
 
             <div className="payment-summary-title">
@@ -31,7 +40,7 @@ export function PaymentSummary({paymentSummary,cartCounts}){
               <div className="payment-summary-money">${moneyCount(paymentSummary.totalCostCents)}</div>
             </div>
 
-            <button className="place-order-button button-primary">
+            <button className="place-order-button button-primary" onClick={createOrder}>
               Place your order
             </button>
         </div>

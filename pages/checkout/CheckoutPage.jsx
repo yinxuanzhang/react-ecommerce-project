@@ -5,10 +5,10 @@ import{useState,useEffect} from 'react';
 import { OrderSummary } from './OrderSummary';
 import { PaymentSummary } from './PaymentSummary';
 
-export function CheckoutPage({products,carts}){
+export function CheckoutPage({products,carts,updateCart}){
   const cartCounts=carts.reduce((total,item)=>total+item.quantity,0);
   const [deliveryoptions,setDeliveryOptions]=useState([]);
-  const[paymentSummary,setPaymentSummary]=useState([]);
+  const[paymentSummary,setPaymentSummary]=useState({});
   useEffect(()=>{
     const fetchCheckOutData=async()=>{
       let response=await axios.get('/api/delivery-options');
@@ -19,7 +19,10 @@ export function CheckoutPage({products,carts}){
     };
     fetchCheckOutData();
   },[]);
-
+  const fetchPaymentSummary=async()=>{
+    const response=await axios.get('/api/payment-summary');
+    setPaymentSummary(response.data);
+  };
   return (
     <>
     <link rel="icon" type="image/svg+xml" href="/cart-favicon.png" />
@@ -30,9 +33,9 @@ export function CheckoutPage({products,carts}){
       <div className="page-title">Review your order</div>
 
       <div className="checkout-grid">
-       <OrderSummary products={products} carts={carts} deliveryoptions={deliveryoptions}/>
+       <OrderSummary products={products} carts={carts} deliveryoptions={deliveryoptions} updateCart={updateCart} fetchPaymentSummary={fetchPaymentSummary}/>
 
-       <PaymentSummary cartCounts={cartCounts} paymentSummary={paymentSummary}/>
+       <PaymentSummary cartCounts={cartCounts} paymentSummary={paymentSummary} updateCart={updateCart}/>
       </div>
     </div>
     </>

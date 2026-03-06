@@ -1,7 +1,22 @@
 import dayjs from 'dayjs';
 import { moneyCount } from '../../utils/money';
+import axios from 'axios';
 
-export function OrderSummary({carts,products,deliveryoptions}){
+export function OrderSummary({carts,products,deliveryoptions,updateCart,fetchPaymentSummary}){
+  const chooseDeliveryOption=async({cartItem,deliveryOption})=>{
+    await axios.put(`/api/cart-items/${cartItem.productId}`,
+      { quantity:cartItem.quantity,
+        deliveryOptionId: deliveryOption.id
+       }
+  )
+      updateCart();
+      fetchPaymentSummary();
+  };
+  const deleteProduct= async(cartItem)=>{
+    await axios.delete(`/api/cart-items/${cartItem.productId}`);
+    updateCart();
+  }
+  
   return(
     <>
     <div className="order-summary">
@@ -38,7 +53,7 @@ export function OrderSummary({carts,products,deliveryoptions}){
                   <span className="update-quantity-link link-primary">
                     Update
                   </span>
-                  <span className="delete-quantity-link link-primary">
+                  <span className="delete-quantity-link link-primary" onClick={()=>deleteProduct(cartItem)}>
                     Delete
                   </span>
                 </div>
@@ -53,7 +68,8 @@ export function OrderSummary({carts,products,deliveryoptions}){
                   <div key={deliveryOption.id} className="delivery-option">
                   <input type="radio" checked={cartItem.deliveryOptionId===deliveryOption.id}
                     className="delivery-option-input"
-                    name={`delivery-option-${deliveryOption.id}`}/>
+                    name={`delivery-option-${cartItem.productId}`}
+                    onChange={()=>chooseDeliveryOption({cartItem,deliveryOption})}/>
                   <div>
                     <div className="delivery-option-date">
                       {`${dayjs().add(deliveryOption.deliveryDays,"day").format("dddd, MMMM D")}`}
