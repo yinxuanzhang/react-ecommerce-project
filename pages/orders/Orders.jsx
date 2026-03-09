@@ -5,18 +5,25 @@ import axios from "axios";
 import dayjs from "dayjs";
 import'./Orders.css'
 
-export function Orders(){
+export function Orders({updateCart,carts}){
   const[orders,setOrders]=useState([]);
   useEffect(()=>{
       axios.get('/api/orders?expand=products').then((response)=>{
         setOrders(response.data);
       });
   },[]);
+  const buyAgain=async(productItem)=>{
+    await axios.post('/api/cart-items',{
+      productId:productItem.productId,
+      quantity: 1
+    })
+    updateCart();
+  }
   return(
     <>
     <link rel="icon" type="image/svg+xml" href="/orders-favicon.png" />
     <title>orders</title>
-    <Header/>
+    <Header carts={carts}/>
     
 
     <div className="orders-page">
@@ -65,7 +72,7 @@ export function Orders(){
                   </div>
                   <button className="buy-again-button button-primary">
                     <img className="buy-again-icon" src="images/icons/buy-again.png" />
-                    <span className="buy-again-message">Add to order</span>
+                    <span className="buy-again-message" onClick={()=>{buyAgain(productItem)}} >Add to cart</span>
                   </button>
                 </div>
 

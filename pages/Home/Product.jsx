@@ -2,7 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 export function Product({productItem,updateCart}){
   const [quantity,setQuantity]=useState(1);
-  
+  const[yourState,setYourState]=useState(false);
+
   return(
           <div  key={productItem.id} className="product-container" >
           <div  className="product-image-container">
@@ -47,7 +48,7 @@ export function Product({productItem,updateCart}){
 
           <div className="product-spacer"></div>
 
-          <div className="added-to-cart">
+          <div style={{opacity:yourState?1:0}} className="added-to-cart">
             <img src="/images/icons/checkmark.png" />
             Added
           </div>
@@ -57,6 +58,10 @@ export function Product({productItem,updateCart}){
               {productId: productItem.id,
               quantity:quantity});
             updateCart();
+            setYourState(true);
+            setTimeout(()=>{
+              setYourState(false)
+            },2000);
           }}>
             Add to Cart
           </button>
