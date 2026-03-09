@@ -8,8 +8,8 @@ import { useSearchParams,useNavigate } from 'react-router-dom';
   const cartsQuantity =carts ?carts.reduce((total,item)=>total+=item.quantity,0): 0;
   const navigate=useNavigate();
   const[searchParams]=useSearchParams(); //why?
-  const searchFromUrl=searchParams.get('search')|| '';//why?
-  const [search,setSearch]=useState(searchFromUrl);
+  const searchFromUrl=searchParams.get('search');//why?
+  const [search,setSearch]=useState(searchFromUrl || '');
   
 
     return(
